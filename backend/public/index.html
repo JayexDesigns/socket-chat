@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>Socket Chat</title>
 </head>
 <body>
-    <p>Testing</p>
+    <p>Socket Chat</p>
+    <div id="login">
+        <input type="text" placeholder="username">
+        <input type="button" value="Send">
+        <p id="loginOutput"></p>
+    </div>
+    <div id="messages">
+        <input type="text" placeholder="message">
+        <input type="button" value="Send">
+    </div>
+    <textarea id="messagesOutput" cols="30" rows="10"></textarea>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
