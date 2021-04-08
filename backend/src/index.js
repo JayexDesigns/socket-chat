@@ -28,6 +28,7 @@ const server = app.listen(PORT, () => {
 
 
 var users = [];
+var currentMessageId = 0;
 
 const io = SocketIO(server);
 
@@ -55,8 +56,10 @@ io.on("connection", (socket) => {
     socket.on("sv:message", (message) => {
         if (users.filter(user => user.username === message.username).length === 1 || message.username === "") {
             try {
-                console.log(`${socket.credentials.username}: ${message.content}`);
+                console.log(`[${currentMessageId}] ${socket.credentials.username}: ${message.content}`);
+                message.id = currentMessageId;
                 io.emit("cl:message", message);
+                ++currentMessageId;
             }
             catch {
                 console.log(`${socket.id}: Ha intentado robar la identidad de ${message.username}`);
