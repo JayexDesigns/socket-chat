@@ -87,4 +87,18 @@ io.on("connection", (socket) => {
             socket.emit("cl:login", false);
         }
     });
+
+    socket.on("disconnect", () => {
+        let id = socket.id;
+        users.map(user => {
+            if (user.id === id) {
+                return console.log(`${user.username} Disconnected, removing username`);
+            }
+        });
+        let usersLength = users.length;
+        users = users.filter(user => user.id !== id);
+        if (usersLength === users.length) {
+            console.log(`${id} Disconnected, no user associated`)
+        }
+    });
 });
