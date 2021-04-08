@@ -1,9 +1,35 @@
 import React, { useState, useEffect} from 'react';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import io from 'socket.io-client';
+
 import Login from './components/Login';
 import Chat from './components/Chat';
 
+
+
 const socket = io.connect('http://192.168.0.181:5000', {transports: ['websocket']});
+
+
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: "#dc527c",
+            main: "#ff0066"
+        },
+        secondary: {
+            light: "#fed883",
+            main: "#febe40"
+        },
+        white: {
+            light: "#ffffff",
+            main: "#d0d0d0",
+            dark: "#1a1a1a"
+        }
+    }
+});
+
+
 
 function App() {
 
@@ -31,13 +57,17 @@ function App() {
     }
 
     const sendMessage = (message) => {
-        socket.emit("sv:message", {username: username, content: message});
+        if (message !== "") {
+            socket.emit("sv:message", {username: username, content: message});
+        }
     }
 
     return (
-        <div className="App">
-            {(logged) ? <Chat wsocket={socket} sendMessage={sendMessage} username={username}></Chat> : <Login changeUsername={changeUsername} sendLogin={sendLogin}></Login>}
-        </div>
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                {(logged) ? <Chat wsocket={socket} sendMessage={sendMessage} username={username}></Chat> : <Login changeUsername={changeUsername} sendLogin={sendLogin}></Login>}
+            </div>
+        </ThemeProvider>
     )
 }
 

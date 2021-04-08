@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+import ChatHeader from './ChatHeader';
+import ChatArea from './ChatArea';
+import ChatSend from './ChatSend';
 
 function Chat(props) {
 
     const [message, setMessage] = useState("");
     const [messageHist, setMessageHist] = useState([]);
+    const [outdated, setOutdated] = useState(true);
 
     useEffect(() => {
         props.wsocket.on("cl:message", (res) => {
             setMessageHist([...messageHist, res]);
         });
+        props.wsocket.on("cl:hist", (res) => {
+            setMessageHist(res);
+        });
         return () => {props.wsocket.off()};
     }, [messageHist, props.wsocket]);
+
+    useEffect(() => {
+        if (outdated === true) {
+            props.wsocket.emit("sv:hist", props.username);
+            setOutdated(false);
+        }
+    }, [outdated, props.wsocket, props.username]);
 
     const changeMessage = (e) => {
         setMessage(e.target.value);
@@ -21,28 +33,14 @@ function Chat(props) {
 
     const sendMessage = () => {
         props.sendMessage(message);
-    }
-
-    const ownMessageStyle = {
-        float: "right"
-    }
-
-    const otherMessageStyle = {
-        float: "left"
+        setMessage("");
     }
 
     return (
-        <div>
-            <div className="Chat">
-                <Typography>Logged In As {props.username}</Typography>
-                <div className="chatArea">
-                    {messageHist.map(m => {
-                        return <Typography style={(m.username === props.username) ? ownMessageStyle : otherMessageStyle} key={m.id}>{m.username}: {m.content}</Typography>;
-                    })}
-                </div>
-                <TextField label="Message" onChange={changeMessage}/>
-                <Button color="primary" variant="contained" onClick={sendMessage}>Send</Button>
-            </div>
+        <div className="Chat">
+            <ChatHeader username={props.username}/>
+            <ChatArea messageHist={messageHist} username={props.username}/>
+            <ChatSend message={message} changeMessage={changeMessage} sendMessage={sendMessage}/>
         </div>
     );
 }

@@ -28,16 +28,17 @@ const server = app.listen(PORT, () => {
 
 
 var users = [];
+var messages = [];
 var currentMessageId = 0;
 
-const io = SocketIO(server);
+const io = SocketIO(server, {cors: {origin: "*"}});
 
 io.on("connection", (socket) => {
     console.log(`New connection from ${socket.id}`);
 
     socket.on("sv:login", (login) => {
         console.log(`User tried to log in as ${login.username}`);
-        if (users.filter(user => user.username === login.username).length < 1) {
+        if (users.filter(user => user.username === login.username).length < 1 && login.username !== "") {
             let user = {
                 id: socket.id,
                 username: login.username
@@ -48,7 +49,12 @@ io.on("connection", (socket) => {
             console.log(`Created username ${login.username}`);
         }
         else {
-            console.log(`Username ${login.username} already exists`);
+            if (login.username === "") {
+                console.log(`Username can't be blank`);
+            }
+            else {
+                console.log(`Username ${login.username} already exists`);
+            }
             socket.emit("cl:login", false);
         }
     });
@@ -59,12 +65,23 @@ io.on("connection", (socket) => {
                 console.log(`[${currentMessageId}] ${socket.credentials.username}: ${message.content}`);
                 message.id = currentMessageId;
                 io.emit("cl:message", message);
+                messages.push(message);
                 ++currentMessageId;
             }
             catch {
-                console.log(`${socket.id}: Ha intentado robar la identidad de ${message.username}`);
+                console.log(`${socket.id}: Ha sido forzado a desconectarse`);
                 socket.emit("cl:login", false);
             }
+        }
+        else {
+            socket.emit("cl:login", false);
+        }
+    });
+
+    socket.on("sv:hist", (username) => {
+        if (users.filter(user => user.username === username).length === 1) {
+            console.log(`Enviando historial de mensajes a ${username}`);
+            socket.emit("cl:hist", messages);
         }
         else {
             socket.emit("cl:login", false);

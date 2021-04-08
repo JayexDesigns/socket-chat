@@ -9,8 +9,8 @@ function Login(props) {
         <div>
             <div className="Login">
                 <Typography variant="h3">Login:</Typography>
-                <TextField label="Username" onChange={props.changeUsername}/>
-                <Button color="primary" variant="contained" onClick={props.sendLogin}>Login</Button>
+                <TextField spellCheck="false" label="Username" onChange={props.changeUsername}/>
+                <Button color="secondary" variant="contained" onClick={props.sendLogin}>Login</Button>
             </div>
         </div>
     )
