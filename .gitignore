@@ -8,6 +8,7 @@ frontend/coverage
 
 # production
 frontend/build
+logs.txt
 
 # misc
 frontend/.DS_Store
