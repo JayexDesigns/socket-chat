@@ -7,11 +7,14 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => {
     return {
         sendSection: {
+            position: "absolute",
+            bottom: 0,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
-            height: "13vh",
+            height: "12vh",
+            width: "100%",
             backgroundColor: theme.palette.white.light,
             borderTopWidth: "0.2rem",
             borderTopStyle: "solid",
@@ -46,8 +49,15 @@ function ChatSend(props) {
     const [content, setContent] = useState("");
 
     useEffect(() => {
-        setContent(props.message);
-    }, [props.message]);
+        if (props.message === "") {
+            setContent("");
+        }
+    }, [props.message])
+
+    const handleChange = (e) => {
+        setContent(e.target.value);
+        props.changeMessage(e);
+    }
 
     const handleKey = (e) => {
         if (e.keyCode === 13) {
@@ -58,7 +68,7 @@ function ChatSend(props) {
     return (
         <div className={classes.sendSection}>
             <div className={classes.send}>
-                <TextField spellCheck="false" fullWidth onChange={props.changeMessage} onKeyDown={handleKey} value={content} color="secondary"/>
+                <TextField spellCheck="false" fullWidth onChange={handleChange} onKeyUp={handleKey} value={content} color="secondary"/>
                 <IconButton className={classes.sendButton} onClick={props.sendMessage}><SendIcon/></IconButton>
             </div>
         </div>

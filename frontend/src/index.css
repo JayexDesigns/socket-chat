@@ -3,25 +3,6 @@ body, body * {
     padding: 0;
 }
 
-.Login {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.Login > * {
-    margin: 1vh 0 !important;
-}
-
-.chatArea {
-    height: 80vh;
-    overflow: auto;
-}
-
 ::-webkit-scrollbar {
     display: none;
 }

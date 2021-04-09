@@ -7,7 +7,7 @@ import Chat from './components/Chat';
 
 
 
-const socket = io.connect('http://localhost', {transports: ['websocket']});
+const socket = io.connect(window.location.hostname, {transports: ['websocket']});
 
 
 

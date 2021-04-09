@@ -8,7 +8,9 @@ const useStyles = makeStyles((theme) => {
     return {
         appbar: {
             alignItems: "flex-end",
-            backgroundImage: theme.palette.primary.main
+            justifyContent: "center",
+            backgroundColor: theme.palette.primary.main,
+            height: "8vh"
         },
         toolbar: theme.mixins.toolbar,
         text: {
@@ -17,6 +19,9 @@ const useStyles = makeStyles((theme) => {
             maxWidth: "18rem",
             overflow: "hidden",
             textOverflow: "ellipsis"
+        },
+        user: {
+            color: theme.palette.secondary.light
         }
     };
 });
@@ -29,7 +34,7 @@ function ChatHeader(props) {
         <div>
             <AppBar className={classes.appbar}>
                 <Toolbar>
-                    <Typography className={classes.text} variant="h5">Logged in as {props.username}</Typography>
+                    <Typography className={classes.text} variant="h5">Logged in as <b className={classes.user}>{props.username}</b></Typography>
                 </Toolbar>
             </AppBar>
             <div className={classes.toolbar}></div>

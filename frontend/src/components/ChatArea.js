@@ -4,12 +4,15 @@ import { makeStyles } from '@material-ui/core';
 import Message from './Message';
 
 const useStyles = makeStyles((theme) => {
+    console.log(theme.mixins.toolbar);
     return {
         chat: {
+            position: "absolute",
+            bottom: "12vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "start",
-            height: "80vh",
+            height: `calc(100% - 20vh)`,
             width: "100%",
             [theme.breakpoints.down('md')]: {
                 padding: 0,
