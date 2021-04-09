@@ -10,3 +10,7 @@
 <br/>
 <h2>Frontend</h2>
 <p>To install all the dependencies simply use the command yarn install if you have yarn installed, if not using npm should work too. Using the command npm run start will start a development server with a slow testing version of the frontend, using npm run build will create a build folder in which you can copy the content and replace the public folder content on the backend with it. asdasd</p>
+<br/>
+<h2>Preview</h2>
+<br/>
+<h3 align="center"><img src="https://raw.githubusercontent.com/JayexDesigns/socket-chat/main/preview.png"></h3>
