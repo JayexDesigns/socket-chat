@@ -9,7 +9,7 @@
 <p>To install all the dependencies simply use the command npm install if you have node and npm installed. Using the command node /src/index.js will start the server or if you prefer you can use nodemon to update the server whenever a file changes.</p>
 <br/>
 <h2>Frontend</h2>
-<p>To install all the dependencies simply use the command yarn install if you have yarn installed, if not using npm should work too. Using the command npm run start will start a development server with a slow testing version of the frontend, using npm run build will create a build folder in which you can copy the content and replace the public folder content on the backend with it. asdasd</p>
+<p>To install all the dependencies simply use the command yarn install if you have yarn installed, if not using npm should work too. Using the command npm run start will start a development server with a slow testing version of the frontend, using npm run build will create a build folder in which you can copy the content and replace the public folder content on the backend with it.</p>
 <br/>
 <h2>Preview</h2>
 <br/>
